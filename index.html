@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 2 · Salva el festival | La Dirección de Proyectos Fases 1 a 3</title>
+<meta property="og:title" content="Salva el festival · Semana 2">
+<meta property="og:description" content="Desafío en clase del módulo La Dirección de Proyectos Fases 1 a 3. Diplomado en Project Management, Utel.">
+<style>
+  :root{
+    --navy:#14213d; --coral:#ff6b4a; --sun:#ffb703; --teal:#06a3a3; --sky:#4cc9f0;
+    --green:#2bb673; --red:#e63946; --violet:#7b5cff; --bg:#fff8f1; --card:#ffffff; --text:#1d2433; --muted:#5b6475;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+  header{background:linear-gradient(120deg,var(--navy),#23395d 55%,var(--teal));color:#fff;padding:18px 20px 26px}
+  .top{display:flex;justify-content:space-between;align-items:center;max-width:960px;margin:0 auto;gap:12px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:1.5rem;letter-spacing:.5px}
+  .brand span{font-weight:400;font-size:.95rem;opacity:.85;margin-left:6px}
+  .crumb{background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.85rem}
+  header h1{max-width:960px;margin:14px auto 0;font-size:1.6rem}
+  .sound{background:var(--sun);color:var(--navy);border:none;border-radius:20px;padding:6px 14px;font-weight:700;cursor:pointer}
+  main{max-width:960px;margin:0 auto;padding:22px 16px 40px}
+  .card{background:var(--card);border-radius:18px;padding:22px;box-shadow:0 6px 22px rgba(20,33,61,.08);margin-bottom:20px}
+  h2{font-size:1.4rem;margin-bottom:10px;color:var(--navy)}
+  .intro p{margin-bottom:10px}
+  .role{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(90deg,#fff1e8,#e9fbfb);border-radius:14px;padding:14px;margin:14px 0}
+  .role .ico{font-size:2rem}
+  .stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+  .stage{border-radius:14px;padding:12px;color:#fff;font-weight:600}
+  .s1{background:var(--violet)} .s2{background:var(--coral)} .s3{background:var(--teal)} .s4{background:#e85d75} .s5{background:var(--navy)}
+  .stage small{display:block;font-weight:400;opacity:.9}
+  label{font-weight:600;display:block;margin:10px 0 6px}
+  input[type=text]{width:100%;padding:12px;border:2px solid #dfe3ea;border-radius:12px;font-size:1rem}
+  input[type=text]:focus{outline:none;border-color:var(--teal)}
+  .btn{display:inline-block;border:none;border-radius:12px;padding:12px 20px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:14px;transition:transform .1s}
+  .btn:active{transform:scale(.97)}
+  .btn-main{background:var(--coral);color:#fff}
+  .btn-alt{background:var(--navy);color:#fff}
+  .btn-light{background:#eef1f6;color:var(--navy)}
+  .hidden{display:none!important}
+  .hud{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .pill{background:#fff;border-radius:20px;padding:6px 14px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+  .bar{background:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .bar .lbl{display:flex;justify-content:space-between;font-weight:600;font-size:.9rem;margin-bottom:6px}
+  .track{height:12px;background:#eef1f6;border-radius:8px;overflow:hidden}
+  .fill{height:100%;border-radius:8px;transition:width .5s}
+  .f-time{background:linear-gradient(90deg,var(--violet),var(--sky))}
+  .f-cost{background:linear-gradient(90deg,var(--coral),var(--sun))}
+  .f-trust{background:linear-gradient(90deg,var(--teal),var(--green))}
+  .tag{display:inline-block;color:#fff;border-radius:20px;padding:4px 12px;font-size:.85rem;font-weight:700;margin-bottom:10px}
+  .progress{height:8px;background:#eef1f6;border-radius:6px;margin-bottom:14px;overflow:hidden}
+  .progress div{height:100%;background:var(--coral);transition:width .4s}
+  .q{font-size:1.15rem;font-weight:600;margin-bottom:6px}
+  .ctx{color:var(--muted);margin-bottom:12px}
+  .opts{display:grid;gap:10px}
+  .opt{text-align:left;background:#f7f9fc;border:2px solid #e3e8f0;border-radius:14px;padding:12px 14px;font-size:1rem;cursor:pointer;transition:all .15s;color:var(--text)}
+  .opt:hover:not(:disabled){border-color:var(--teal);background:#effbfb}
+  .opt.ok{border-color:var(--green);background:#e8f8ef}
+  .opt.bad{border-color:var(--red);background:#fdecee}
+  .opt:disabled{cursor:default}
+  .tip{margin-top:14px;border-radius:14px;padding:12px 14px;background:#fff7e0;border-left:6px solid var(--sun)}
+  .tip.good{background:#e8f8ef;border-left-color:var(--green)}
+  .tip.wrong{background:#fdecee;border-left-color:var(--red)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0}
+  .stat{border-radius:14px;padding:14px;text-align:center;color:#fff}
+  .stat b{display:block;font-size:1.8rem}
+  .verdict{border-radius:14px;padding:14px;margin:10px 0;font-weight:600}
+  canvas{max-width:100%;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.1);margin-top:10px}
+  .share{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .share a,.share button{border:none;color:#fff;text-decoration:none;padding:10px 16px;border-radius:12px;font-weight:700;cursor:pointer;font-size:.95rem}
+  .fb{background:#1877f2}.ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)}.li{background:#0a66c2}.wa{background:#25d366}.xx{background:#111}
+  .note{font-size:.85rem;color:var(--muted);margin-top:8px}
+  footer{background:var(--navy);color:#fff;text-align:center;padding:22px 16px}
+  footer .brand{font-size:1.3rem}
+  footer .sign{margin-top:10px;font-weight:700}
+  footer .sign small{display:block;font-weight:400;opacity:.85}
+  footer .line{margin-top:12px;font-size:.85rem;opacity:.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div class="brand">Utel <span>Universidad</span></div>
+    <div class="crumb">Semana 2 · Desafío en clase</div>
+    <button class="sound" id="soundBtn">🔊 Sonido</button>
+  </div>
+  <h1>La Dirección de Proyectos Fases 1 a 3</h1>
+</header>
+
+<main>
+
+  <!-- INICIO -->
+  <section class="card intro" id="intro">
+    <h2>🎪 Salva el festival</h2>
+    <p>En 2017, Fyre Festival prometió villas de lujo en una isla de Bahamas y los asistentes encontraron tiendas de emergencia, colchones mojados y sándwiches de queso. El equipo había advertido los problemas, pero nadie planeó a tiempo.</p>
+    <p>Hoy el festival tiene una segunda oportunidad. Faltan <b>60 días</b> para el evento y se esperan <b>5,000 asistentes</b>.</p>
+
+    <div class="role">
+      <div class="ico">🧑‍💼</div>
+      <div><b>Tu rol</b><br>Eres el nuevo director del proyecto. Vas a cerrar la fase de planeación en 4 etapas. Cada decisión mueve tres barras: <b>tiempo</b>, <b>costo</b> y <b>confianza de los asistentes</b>.</div>
+    </div>
+
+    <div class="stages">
+      <div class="stage s1">📅 Etapa 1<small>Cronograma</small></div>
+      <div class="stage s2">💰 Etapa 2<small>Costos</small></div>
+      <div class="stage s3">💬 Etapa 3<small>Comunicaciones</small></div>
+      <div class="stage s4">⚠️ Etapa 4<small>Riesgos</small></div>
+      <div class="stage s5">✅ Cierre<small>Fase de planeación</small></div>
+    </div>
+
+    <label for="name">Escribe tu nombre para tu certificado</label>
+    <input type="text" id="name" placeholder="Tu nombre completo" maxlength="60">
+    <button class="btn btn-main" id="startBtn">Planear el festival ▶</button>
+  </section>
+
+  <!-- JUEGO -->
+  <section class="hidden" id="game">
+    <div class="hud">
+      <div class="pill" id="timer">⏱ 00:00</div>
+      <div class="pill" id="hits">✅ 0 aciertos</div>
+      <div class="pill" id="count">Decisión 1 de 8</div>
+    </div>
+    <div class="bars">
+      <div class="bar"><div class="lbl"><span>⏳ Tiempo</span><span id="vTime">100</span></div><div class="track"><div class="fill f-time" id="bTime" style="width:100%"></div></div></div>
+      <div class="bar"><div class="lbl"><span>💵 Costo</span><span id="vCost">100</span></div><div class="track"><div class="fill f-cost" id="bCost" style="width:100%"></div></div></div>
+      <div class="bar"><div class="lbl"><span>🤝 Confianza</span><span id="vTrust">100</span></div><div class="track"><div class="fill f-trust" id="bTrust" style="width:100%"></div></div></div>
+    </div>
+    <div class="card">
+      <div class="progress"><div id="prog" style="width:0%"></div></div>
+      <span class="tag" id="tag">📅 Etapa 1 · Cronograma</span>
+      <p class="q" id="q"></p>
+      <p class="ctx" id="ctx"></p>
+      <div class="opts" id="opts"></div>
+      <div class="tip hidden" id="tip"></div>
+      <button class="btn btn-alt hidden" id="nextBtn">Continuar ▶</button>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="card hidden" id="results">
+    <h2>🏆 ¡Desafío terminado!</h2>
+    <div class="stats">
+      <div class="stat" style="background:var(--coral)"><b id="rScore">0</b>de 100 puntos</div>
+      <div class="stat" style="background:var(--teal)"><b id="rHits">0/8</b>aciertos</div>
+      <div class="stat" style="background:var(--violet)"><b id="rTime">00:00</b>tiempo total</div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+
+    <h2 style="margin-top:18px">📜 Certificado de participación</h2>
+    <canvas id="cert" width="1200" height="800"></canvas>
+    <div>
+      <button class="btn btn-main" id="dlBtn">⬇ Descargar certificado</button>
+      <button class="btn btn-light" id="againBtn">↻ Intentar de nuevo</button>
+    </div>
+
+    <h2 style="margin-top:22px">📣 Comparte tu resultado</h2>
+    <div class="share">
+      <a class="fb" id="shFb" target="_blank" rel="noopener">Facebook</a>
+      <button class="ig" id="shIg">Instagram</button>
+      <a class="li" id="shLi" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="wa" id="shWa" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="xx" id="shX" target="_blank" rel="noopener">X</a>
+    </div>
+    <p class="note">Para Instagram, descarga tu certificado y súbelo a una historia o publicación.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="brand">Utel <span>Universidad</span></div>
+  <div class="sign">Dr. Armando Sandoval Maravilla<small>Docente Utel</small></div>
+  <div class="line">Docente: Dr. Armando Sandoval Maravilla · Diplomado en Project Management · Utel</div>
+</footer>
+
+<script>
+const STAGES = {
+  1:{t:"📅 Etapa 1 · Cronograma", c:"#7b5cff"},
+  2:{t:"💰 Etapa 2 · Costos", c:"#ff6b4a"},
+  3:{t:"💬 Etapa 3 · Comunicaciones", c:"#06a3a3"},
+  4:{t:"⚠️ Etapa 4 · Riesgos", c:"#e85d75"},
+  5:{t:"✅ Cierre de la fase de planeación", c:"#14213d"}
+};
+
+// d = [tiempo, costo, confianza]
+const QUESTIONS = [
+  {s:1, q:"¿Cuál es la ruta crítica del proyecto?",
+   ctx:"Permisos del gobierno (10 días) → traslado de material a la isla (15 días) → montaje del hospedaje (25 días). En paralelo: escenario y sonido (20 días).",
+   o:[
+    {t:"Escenario y sonido: 20 días.", d:[-15,-5,-5]},
+    {t:"Permisos → traslado → hospedaje: 50 días.", d:[5,0,5], ok:true},
+    {t:"Permisos → escenario: 30 días.", d:[-10,-5,-5]}],
+   tip:"La ruta crítica es la cadena de actividades más larga y no tiene holgura. Aquí son 50 días: solo quedan 10 de margen y cualquier retraso en el hospedaje retrasa todo el festival."},
+
+  {s:2, q:"El presupuesto base suma 5 millones de dólares. ¿Cómo lo cierras?",
+   ctx:"Los inversionistas piden una sola cifra para aprobar el proyecto.",
+   o:[
+    {t:"Así se queda: todo está calculado y no hace falta reserva.", d:[0,-15,-5]},
+    {t:"Agregar una reserva para contingencias por los riesgos identificados y una reserva de gestión.", d:[0,5,5], ok:true},
+    {t:"Duplicarlo por si acaso, sin justificar el aumento.", d:[0,-10,-10]}],
+   tip:"El presupuesto incluye las estimaciones más las reservas. La reserva para contingencias cubre riesgos conocidos y la reserva de gestión cubre lo imprevisto. Inflar sin justificar daña la confianza."},
+
+  {s:3, q:"A 30 días del evento, el hospedaje va retrasado. ¿Qué comunicas?",
+   ctx:"El equipo de marketing quiere seguir publicando fotos de las villas de lujo.",
+   o:[
+    {t:"Nada. Seguir con la publicidad y resolverlo en silencio.", d:[-5,-5,-25]},
+    {t:"Informar con datos a inversionistas y asistentes: el retraso, el plan de acción y las opciones.", d:[0,0,10], ok:true},
+    {t:"Avisar a los asistentes el mismo día del evento.", d:[-10,-10,-30]}],
+   tip:"Comunicar a tiempo y con la verdad protege la confianza. En Fyre se siguió prometiendo lo que no existía y eso convirtió un retraso en un desastre."},
+
+  {s:4, q:"Riesgo: la lluvia puede mojar tiendas y colchones.",
+   ctx:"Elige la mejor respuesta al riesgo.",
+   o:[
+    {t:"Aceptar: si llueve, que cada quien se las arregle.", d:[0,-5,-15]},
+    {t:"Mitigar: tiendas impermeables, tarimas elevadas y bodega techada para el equipaje.", d:[0,-2,10], ok:true},
+    {t:"Evitar: cancelar el festival.", d:[-10,-15,-15]}],
+   tip:"Mitigar reduce la probabilidad o el impacto del riesgo. Aquí no hace falta cancelar: con medidas concretas el daño se reduce mucho."},
+
+  {s:4, q:"Riesgo: una tormenta tropical obliga a cancelar y hay que devolver el dinero.",
+   ctx:"Elige la mejor respuesta al riesgo.",
+   o:[
+    {t:"Transferir: contratar un seguro de cancelación por clima.", d:[0,5,5], ok:true},
+    {t:"Aceptar: si pasa, se verá de dónde sale el dinero.", d:[0,-20,-10]},
+    {t:"Mitigar: pedir a los asistentes que traigan impermeable.", d:[0,-10,-5]}],
+   tip:"Transferir pasa el impacto económico a un tercero, como una aseguradora. El riesgo sigue existiendo, pero el proyecto no absorbe la pérdida."},
+
+  {s:4, q:"Riesgo: el sitio no tiene espacio para 5,000 personas.",
+   ctx:"El equipo de logística lo advirtió desde el principio.",
+   o:[
+    {t:"Aceptar: acomodar a la gente como se pueda.", d:[-5,-10,-20]},
+    {t:"Evitar: reducir el aforo o cambiar de sede antes de seguir vendiendo boletos.", d:[0,0,10], ok:true},
+    {t:"Transferir: que el gobierno de la isla resuelva el espacio.", d:[-5,-5,-10]}],
+   tip:"Evitar elimina la causa del riesgo cambiando el plan. Si el espacio no alcanza, se ajusta el alcance o la sede antes de comprometerse con más gente."},
+
+  {s:4, q:"Riesgo: un artista secundario puede cancelar su presentación.",
+   ctx:"Su participación no es clave para el evento.",
+   o:[
+    {t:"Evitar: quitar a todos los artistas secundarios.", d:[0,0,-10]},
+    {t:"Aceptar: tener una lista de reemplazos y seguir adelante si pasa.", d:[0,0,5], ok:true},
+    {t:"Transferir: pedir a los asistentes que firmen que no reclamarán.", d:[0,0,-15]}],
+   tip:"Aceptar es válido para riesgos de bajo impacto. La aceptación activa deja preparado un plan de contingencia, como una lista de reemplazos."},
+
+  {s:5, q:"Ya tienes cronograma, presupuesto, comunicaciones y riesgos. ¿Cómo cierras la planeación?",
+   ctx:"El fundador quiere arrancar la ejecución de inmediato.",
+   o:[
+    {t:"Arrancar sin revisar: ya se perdió mucho tiempo.", d:[-5,-10,-15]},
+    {t:"Integrar todo en el plan para la dirección del proyecto, aprobarlo con los interesados y fijar las líneas base.", d:[5,5,10], ok:true},
+    {t:"Dejar el plan abierto y cambiarlo durante la ejecución según se vaya necesitando.", d:[-10,-10,-10]}],
+   tip:"La planeación cierra cuando el plan está integrado y aprobado. Las líneas base de alcance, cronograma y costo son la referencia para controlar la ejecución."}
+];
+
+let idx=0, hits=0, bars=[100,100,100], seconds=0, tick=null, soundOn=true, playerName="";
+const $=id=>document.getElementById(id);
+
+// Sonido
+let actx=null;
+function beep(type){
+  if(!soundOn) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const notes = type==="ok" ? [523,659,784] : type==="bad" ? [330,247] : [523,659,784,1047];
+    notes.forEach((f,i)=>{
+      const o=actx.createOscillator(), g=actx.createGain();
+      o.type = type==="bad" ? "sawtooth" : "triangle";
+      o.frequency.value=f; o.connect(g); g.connect(actx.destination);
+      const t=actx.currentTime+i*0.12;
+      g.gain.setValueAtTime(0.15,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.18);
+      o.start(t); o.stop(t+0.2);
+    });
+  }catch(e){}
+}
+$("soundBtn").onclick=()=>{soundOn=!soundOn; $("soundBtn").textContent = soundOn?"🔊 Sonido":"🔇 Sin sonido";};
+
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+
+function updateBars(){
+  const ids=[["bTime","vTime"],["bCost","vCost"],["bTrust","vTrust"]];
+  ids.forEach((p,i)=>{ $(p[0]).style.width=bars[i]+"%"; $(p[1]).textContent=bars[i]; });
+}
+
+$("startBtn").onclick=()=>{
+  playerName=$("name").value.trim();
+  if(!playerName){ $("name").focus(); $("name").style.borderColor="#e63946"; return; }
+  $("intro").classList.add("hidden"); $("game").classList.remove("hidden");
+  idx=0; hits=0; bars=[100,100,100]; seconds=0; updateBars();
+  clearInterval(tick); tick=setInterval(()=>{seconds++; $("timer").textContent="⏱ "+fmt(seconds);},1000);
+  render();
+};
+
+function render(){
+  const Q=QUESTIONS[idx], st=STAGES[Q.s];
+  $("tag").textContent=st.t; $("tag").style.background=st.c;
+  $("q").textContent=Q.q; $("ctx").textContent=Q.ctx;
+  $("count").textContent=`Decisión ${idx+1} de ${QUESTIONS.length}`;
+  $("prog").style.width=(idx/QUESTIONS.length*100)+"%";
+  $("tip").classList.add("hidden"); $("nextBtn").classList.add("hidden");
+  const box=$("opts"); box.innerHTML="";
+  Q.o.forEach((op,i)=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.textContent=op.t;
+    b.onclick=()=>choose(i);
+    box.appendChild(b);
+  });
+}
+
+function choose(i){
+  const Q=QUESTIONS[idx], op=Q.o[i], btns=$("opts").children;
+  [...btns].forEach((b,j)=>{ b.disabled=true; if(Q.o[j].ok) b.classList.add("ok"); });
+  if(op.ok){ hits++; beep("ok"); } else { btns[i].classList.add("bad"); beep("bad"); }
+  bars=bars.map((v,k)=>Math.max(0,Math.min(100,v+op.d[k]))); updateBars();
+  $("hits").textContent=`✅ ${hits} aciertos`;
+  const tip=$("tip");
+  tip.className="tip "+(op.ok?"good":"wrong");
+  tip.innerHTML=(op.ok?"<b>✅ ¡Bien decidido!</b> ":"<b>❌ No era la mejor opción.</b> ")+"💡 "+Q.tip;
+  $("nextBtn").classList.remove("hidden");
+  $("nextBtn").textContent = idx===QUESTIONS.length-1 ? "Ver resultado 🏆" : "Continuar ▶";
+}
+
+$("nextBtn").onclick=()=>{ idx++; if(idx<QUESTIONS.length) render(); else finish(); };
+
+function finish(){
+  clearInterval(tick); beep("end");
+  const score=Math.round(hits/QUESTIONS.length*100);
+  $("game").classList.add("hidden"); $("results").classList.remove("hidden");
+  $("rScore").textContent=score; $("rHits").textContent=`${hits}/${QUESTIONS.length}`; $("rTime").textContent=fmt(seconds);
+  const v=$("verdict");
+  if(score>=80){ v.style.background="#e8f8ef"; v.innerHTML="🎉 <b>El festival se hace.</b> Tu plan es realista, tiene reservas, informa a tiempo y responde a los riesgos. Así se cierra bien una fase de planeación."; }
+  else if(score>=50){ v.style.background="#fff7e0"; v.innerHTML="⏸️ <b>El festival se pospone a tiempo.</b> Tu plan tiene huecos, pero los detectaste antes de que llegaran los asistentes. Revisa los tips y vuelve a intentarlo."; }
+  else { v.style.background="#fdecee"; v.innerHTML="🔥 <b>Otro Fyre Festival.</b> El plan no alcanzó para lo que se prometió. Revisa el cronograma, el presupuesto, la comunicación y los riesgos, y vuelve a intentarlo."; }
+  drawCert(score);
+  setShare(score);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function drawCert(score){
+  const c=$("cert"), x=c.getContext("2d"), W=c.width, H=c.height;
+  const g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,"#fff8f1"); g.addColorStop(1,"#e9fbfb");
+  x.fillStyle=g; x.fillRect(0,0,W,H);
+  x.fillStyle="#14213d"; x.fillRect(0,0,W,110);
+  x.fillStyle="#ff6b4a"; x.fillRect(0,110,W,10);
+  x.fillStyle="#06a3a3"; x.fillRect(0,H-20,W,20);
+  x.strokeStyle="#ffb703"; x.lineWidth=6; x.strokeRect(30,140,W-60,H-190);
+  x.fillStyle="#fff"; x.font="bold 46px Segoe UI, Arial"; x.textAlign="left"; x.fillText("Utel",50,72);
+  x.font="26px Segoe UI, Arial"; x.fillText("Universidad",160,72);
+  x.textAlign="right"; x.font="22px Segoe UI, Arial"; x.fillText("Semana 2 · Desafío en clase",W-50,70);
+  x.textAlign="center"; x.fillStyle="#14213d";
+  x.font="bold 54px Segoe UI, Arial"; x.fillText("Certificado de participación",W/2,230);
+  x.fillStyle="#ff6b4a"; x.font="bold 34px Segoe UI, Arial"; x.fillText("🎪 Salva el festival",W/2,285);
+  x.fillStyle="#5b6475"; x.font="26px Segoe UI, Arial"; x.fillText("Se otorga a",W/2,350);
+  x.fillStyle="#14213d"; x.font="bold 50px Segoe UI, Arial"; x.fillText(playerName,W/2,420);
+  x.fillStyle="#1d2433"; x.font="24px Segoe UI, Arial";
+  x.fillText("por completar el desafío en clase de la semana 2 en La Dirección de Proyectos Fases 1 a 3,",W/2,480);
+  x.fillText("Diplomado en Project Management.",W/2,515);
+  x.fillStyle="#06a3a3"; x.font="bold 30px Segoe UI, Arial";
+  x.fillText(`Puntaje: ${score}/100   ·   Aciertos: ${hits}/${QUESTIONS.length}   ·   Tiempo: ${fmt(seconds)}`,W/2,580);
+  x.strokeStyle="#14213d"; x.lineWidth=2; x.beginPath(); x.moveTo(W/2-220,665); x.lineTo(W/2+220,665); x.stroke();
+  x.fillStyle="#14213d"; x.font="bold 26px Segoe UI, Arial"; x.fillText("Dr. Armando Sandoval Maravilla",W/2,700);
+  x.fillStyle="#5b6475"; x.font="22px Segoe UI, Arial"; x.fillText("Docente Utel",W/2,732);
+  const d=new Date(); x.textAlign="right"; x.font="18px Segoe UI, Arial";
+  x.fillText(d.toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"}),W-60,H-40);
+}
+
+$("dlBtn").onclick=()=>{
+  const a=document.createElement("a");
+  a.download="certificado_semana2_salva_el_festival.png";
+  a.href=$("cert").toDataURL("image/png"); a.click();
+};
+$("againBtn").onclick=()=>{
+  $("results").classList.add("hidden"); $("intro").classList.remove("hidden");
+  $("hits").textContent="✅ 0 aciertos"; $("timer").textContent="⏱ 00:00";
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+function setShare(score){
+  const url=encodeURIComponent(location.href);
+  const txt=encodeURIComponent(`Obtuve ${score}/100 en el desafío "Salva el festival" de La Dirección de Proyectos Fases 1 a 3 (Diplomado en Project Management, Utel). 🎪📅💰⚠️`);
+  $("shFb").href=`https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  $("shLi").href=`https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  $("shWa").href=`https://wa.me/?text=${txt}%20${url}`;
+  $("shX").href=`https://twitter.com/intent/tweet?text=${txt}&url=${url}`;
+}
+$("shIg").onclick=()=>{ $("dlBtn").click(); alert("Tu certificado se descargó. Súbelo a una historia o publicación de Instagram."); };
+</script>
+</body>
+</html>
